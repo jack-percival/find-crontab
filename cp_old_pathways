@@ -1,0 +1,1 @@
+cp /home/jack/documents/scripts/pathways /home/jack/documents/scripts/old_pathways/pathways_"$(date)"
