@@ -1,2 +1,1 @@
-/home/jack/documents
-/home/jack/documents/jmc
+/home/jack/find_demo
