@@ -39,8 +39,13 @@ file=/home/jack/documents/scripts/cleanup_paths
 lines=$(cat $file | sed 's/\r//')
 for line in $lines
 do 
-	sudo echo $line
-        sudo find $line -mtime -2 -type f -name "*.logs" | xargs ls -al 
+	if [ $line-d ]; then
+			sudo echo $line
+			sudo find $line -mtime +2 -type f -name "*.logs" | xargs null 
+		else
+			echo "directory does not exist"
+	fi
+
 done
 fi
 
