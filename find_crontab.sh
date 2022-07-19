@@ -41,7 +41,7 @@ for line in $lines
 do 
 	if [ $line-d ]; then
 			sudo echo $line
-			sudo find $line -mtime +2 -type f -name "*.logs" | xargs null 
+			sudo find $line -mtime +2 -type f -name "*.logs" | tr " " "\n"  >> /home/jack/documents/scripts/find_crontab/output
 		else
 			echo "directory does not exist"
 	fi
@@ -54,4 +54,12 @@ if [ $? -eq 0 ]; then
 	else
 		echo "find failed"
 		        exit
+
 fi
+
+delete_file=/home/jack/documents/scripts/find_crontab/output
+delete_lines=$(cat $delete_file)
+for line in $delete_lines
+do
+       	sudo echo $line 
+															done
