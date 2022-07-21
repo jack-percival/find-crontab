@@ -1,6 +1,7 @@
 #!/bin/bash -x
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date)
+
 if [ ! -d /home/jack/documents/scripts/old_cleanup_paths ]; then
 	# make directory if it does not exist
 	mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
@@ -23,6 +24,7 @@ if [ ! -d /home/jack/documents/scripts/find_crontab/output ]; then
 		else
 			echo "file already exists"
 fi
+
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
 	        echo "file created or already exists"
@@ -54,7 +56,7 @@ if [ $? -eq 0 ]; then
 		        exit
 fi
 
-#runs the find command against every pathway designated in the pathways.sh 
+#runs find against every path defintie in cleanup_paths. Outputs the results to the output file with the current date to create a log of all files deleted.
 file=/home/jack/documents/scripts/cleanup_paths
 lines=$(cat $file | sed 's/\r//')
 for line in $lines
@@ -79,6 +81,7 @@ if [ $? -eq 0 ]; then
 
 fi
 
+#searches through the output file and deletes all files designated 
 delete_file=/home/jack/documents/scripts/find_crontab/output
 delete_lines=$(cat $delete_file)
 for line in $delete_lines
