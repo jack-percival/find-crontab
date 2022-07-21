@@ -1,5 +1,6 @@
 #!/bin/bash -x
 # if statement to check if the folder exists and if it doesn't to create it
+date=$(date)
 if [ ! -d /home/jack/documents/scripts/old_cleanup_paths ]; then
 	# make directory if it does not exist
 	mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
@@ -60,8 +61,9 @@ for line in $lines
 do 
 	if [ $line-d ]; then
 			sudo echo $line
+			sudo echo "#$date" >> /home/jack/documents/scripts/find_crontab/output
 			sudo find $line -mtime -2 -type f -name "*.logs" | tr " " "\n"  >> /home/jack/documents/scripts/find_crontab/output
-	    	        sudo find $line -mtime -2 -type f -name "*.logs" | xargs rm -f
+	    	       # sudo find $line -mtime -2 -type f -name "*.logs" | xargs rm -f
 		else
 			echo "directory does not exist"
 	fi
@@ -77,12 +79,12 @@ if [ $? -eq 0 ]; then
 
 fi
 
-#delete_file=/home/jack/documents/scripts/find_crontab/output
-#delete_lines=$(cat $delete_file)
-#for line in $delete_lines
-#do
- #      sudo rm -f 
-#done
+delete_file=/home/jack/documents/scripts/find_crontab/output
+delete_lines=$(cat $delete_file)
+for line in $delete_lines
+do
+       echo sudo rm -f $line 
+done
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
