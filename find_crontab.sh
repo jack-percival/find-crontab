@@ -1,12 +1,13 @@
-#!/bin/bash -x
+#!/bin/sh
+set -x
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date)
 
 if [ ! -d /home/jack/documents/scripts/old_cleanup_paths ]; then
 	# make directory if it does not exist
-	mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
+        mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
 else
-echo "folder already exists"
+		echo "folder already exists"
 fi
 
 #checks to see if previous command has ran succesfully
@@ -27,10 +28,10 @@ fi
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
-	        echo "file created or already exists"
+	       echo "file created or already exists"
 else
-                echo "mkdir failed"
-	        exit
+               echo "mkdir failed"
+	       exit
 fi
 
 # copies out previous day's pathways file and renames it with the date at the end.
@@ -38,7 +39,7 @@ cp /home/jack/documents/scripts/cleanup_paths /home/jack/documents/scripts/old_c
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
-	        echo "copied succesfully"
+	       echo "copied succesfully"
 	else
 		echo "copy failed"
 		        exit
@@ -46,14 +47,15 @@ fi
 
 # retrieves new pathways file from url
 # wget -O is used because we only want to download that specific file not the whole html code
-wget -O /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/Find-crontab/master/cleanup_paths 
+wget -O /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
-	        echo "file succesfully downloaded"
+	       echo "file succesfully downloaded"
 	else
 		echo "wget failed"
-		        exit
+		exit
+		        
 fi
 
 #runs find against every path defintie in cleanup_paths. Outputs the results to the output file with the current date to create a log of all files deleted.
@@ -74,7 +76,7 @@ done
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
-	        echo "find succesfully ran"
+	       echo "find succesfully ran"
 	else
 		echo "find failed"
 		        exit
@@ -86,13 +88,13 @@ delete_file=/home/jack/documents/scripts/find_crontab/output
 delete_lines=$(cat $delete_file)
 for line in $delete_lines
 do
-       echo sudo rm -f $line 
+   sudo rm -f $line 
 done
 
 #checks to see if previous command has ran succesfully
 if [ $? -eq 0 ]; then
-	                echo "delete succesfully ran"
+	               echo "delete succesfully ran"
 			        else
-					                echo "delete failed" 
+					               echo "delete failed" 
 						       	exit
 fi
