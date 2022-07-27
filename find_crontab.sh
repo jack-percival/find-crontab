@@ -3,9 +3,9 @@ set -x
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
 
- if [ ! -d /home/jack/documents/scripts/find_crontab/old_cleanup_paths ]; then
+ if [ ! -d /home/jack/documents/scripts/old_cleanup_paths ]; then
      # make directory if it does not exist
-         sudo mkdir -p /home/jack/documents/scripts/find_crontab/old_cleanup_paths;
+         mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
  else
          echo "folder already exists"
  fi
@@ -21,7 +21,7 @@ date=$(date +"%d-%m-%Y_%T")
 # #if statement to make the output file
  if [ ! -d /home/jack/documents/scripts/find_crontab/output ]; then
              # make directory if it does not exist
-               sudo touch /home/jack/documents/scripts/find_crontab/output;
+               touch /home/jack/documents/scripts/find_crontab/output;
          else
              echo "file already exists"
  fi
@@ -35,7 +35,7 @@ date=$(date +"%d-%m-%Y_%T")
  fi
 
 # # copies out previous day's pathways file and renames it with the date at the end.
-sudo cp /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/find_crontab/old_cleanup_paths/cleanup_paths_"$(date)"
+ cp /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/old_cleanup_paths/cleanup_paths_'$(date)'
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
@@ -47,7 +47,7 @@ sudo cp /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/docum
 
 # # retrieves new pathways file from url
 # # wget -O is used because we only want to download that specific file not the whole html code
-sudo wget -O /home/jack/documents/scripts/find_crontab/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
+wget -O /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
@@ -67,16 +67,16 @@ outfile=$DIR/output
 
 # empty the outfile
 if [ -f $outfile ]; then
-	    sudo mv $outfile $outfile.$date
+	    mv $outfile $outfile.$date
 fi
 
-sudo touch $outfile
-sudo chmod 777 $outfile
+touch $outfile
+chmod 777 $outfile
 lines=$(cat $file | sed 's/\r//')
 for line in $lines
 do 
 	    if [ -d $line ]; then
-		                sudo find $line -type f -mtime -2 -name "*.logs" | tr " " "\n" >> $DIR/output
+		                find $line -type f -mtime -2 -name "*.logs" | tr " " "\n" >> $DIR/output
 				    fi
 
 			    done
@@ -95,7 +95,7 @@ do
 			    delete_lines=$(cat $delete_file | grep -v ^#)
 			    for line in $delete_lines
 			    do
-				     sudo rm -f $line 
+				      rm -f $line 
 			      done
 
 			      #checks to see if previous command has ran succesfully
