@@ -30,7 +30,7 @@ date=$(date +"%d-%m-%Y_%T")
  if [ $? -eq 0 ]; then
             echo "file created or already exists"
  else
-                echo "mkdir failed"
+                echo "output file creation failed"
             exit
  fi
 
