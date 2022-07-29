@@ -76,6 +76,7 @@ lines=$(cat $file | sed 's/\r//')
 for line in $lines
 do 
 	    if [ -d $line ]; then
+		    # creates a list of all files to be processed and appends it to the output file
 		                find $line -type f -mtime -2 -name "*.logs" | tr " " "\n" >> $DIR/output
 				    fi
 
