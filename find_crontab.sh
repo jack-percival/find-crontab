@@ -1,5 +1,19 @@
 #!/bin/sh
 set -x
+
+SEARCH_TARGET=$1
+MTIME_VAL=$2
+
+if [-z $1]
+then 
+	SEARCH_TARGET=$1
+fi
+
+if [-z $2]
+then 
+	MTIME_VAL=+2
+fi 
+
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
 
@@ -77,7 +91,7 @@ for line in $lines
 do 
 	    if [ -d $line ]; then
 		    # creates a list of all files to be processed and appends it to the output file
-		                find $line -type f -mtime -2 -name "*.logs" | tr " " "\n" >> $DIR/output
+		                find $line -type f -mtime $MTIME_VAL -name $SEARCH_TARGET | tr " " "\n" >> $DIR/output
 				    fi
 
 			    done
