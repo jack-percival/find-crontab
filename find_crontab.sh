@@ -3,15 +3,16 @@ set -x
 
 SEARCH_TARGET=$1
 MTIME_VAL=$2
-
+#checks that first variable is defined when parsing in parameters. $1 is used to the -name switch in find
 if [-z $1]
 then 
 	SEARCH_TARGET=$1
 fi
 
+#checks that second variaable is defined when parsing in parameters. $2 is used to designate the mtime switch
 if [-z $2]
 then 
-	MTIME_VAL=+2
+	MTIME_VAL=$2
 fi 
 
 # if statement to check if the folder exists and if it doesn't to create it
@@ -84,8 +85,10 @@ if [ -f $outfile ]; then
 	    mv $outfile $outfile.$date
 fi
 
+#creates the outfile and sets permissing to be edited
 touch $outfile
 chmod 777 $outfile
+#removes any carriage returns in case windows has interferred and messed up how the lines are output to the file
 lines=$(cat $file | sed 's/\r//')
 for line in $lines
 do 
