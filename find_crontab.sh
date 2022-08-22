@@ -3,6 +3,10 @@ set -x
 
 SEARCH_TARGET=$1
 MTIME_VAL=$2
+OCP=$3
+OUTPUT=$4
+OLD_LOGS=$5 
+FOLDERS_TO_CLEAN=$6
 #checks that first variable is defined when parsing in parameters. $1 is used to the -name switch in find
 if [-z $1]
 then 
@@ -15,12 +19,37 @@ then
 	MTIME_VAL=$2
 fi 
 
+#checks that third variaable is defined when parsing in parameters. $3 is used to designate the folder path that old cleanup paths are moved to 
+
+if [-z $2]
+then
+	OCP=$3
+fi
+
+#checks that fourth variaable is defined when parsing in parameters. $4 is used to designate the output which the find command will populate with files to delete
+if [-z $2]
+then
+	OUTPUT=$4
+fi
+
+#checks that fifth variaable is defined when parsing in parameters. $5 is used to designate the file for cp to copy out to create a log of folders scanned previous days
+if [-z $2]
+then
+	OLD_LOGS=$5
+fi
+
+#checks that sixth variaable is defined when parsing in parameters. $6 is used to designate the file to be downloaded by wget. This file contains the absolute paths of folders that are to be cleaned
+if [-z $2]
+then
+	FOLDERS_TO_CLEAN=$6
+fi
+
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
 
- if [ ! -d /home/jack/documents/scripts/old_cleanup_paths ]; then
+ if [ ! -d $OCP ]; then
      # make directory if it does not exist
-         mkdir -p /home/jack/documents/scripts/old_cleanup_paths;
+         mkdir -p $OCP;
  else
          echo "folder already exists"
  fi
@@ -34,9 +63,9 @@ date=$(date +"%d-%m-%Y_%T")
  fi
 
 # #if statement to make the output file
- if [ ! -d /home/jack/documents/scripts/find_crontab/output ]; then
+ if [ ! -d $OUTPUT ]; then
              # make directory if it does not exist
-               touch /home/jack/documents/scripts/find_crontab/output;
+               touch $OUTPUT;
          else
              echo "file already exists"
  fi
@@ -50,7 +79,7 @@ date=$(date +"%d-%m-%Y_%T")
  fi
 
 # # copies out previous day's pathways file and renames it with the date at the end.
- cp /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/old_cleanup_paths/cleanup_paths_'$(date)'
+ cp $OLD_LOGS 
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
@@ -62,7 +91,8 @@ date=$(date +"%d-%m-%Y_%T")
 
 # # retrieves new pathways file from url
 # # wget -O is used because we only want to download that specific file not the whole html code
-wget -O /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
+
+wget -O $FOLDERS_TO_CLEAN 
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
