@@ -1,0 +1,13 @@
+$1=.logs
+
+$2= +2
+
+$3=/home/jack/documents/scripts/old_cleanup_paths
+
+$4=/home/jack/documents/scripts/find_crontab/output
+
+$5=/home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/old_cleanup_paths/cleanup_paths_'$(date)'
+
+$6=/home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
+
+./find_crontab.sh .logs +2 /home/jack/documents/scripts/old_cleanup_paths /home/jack/documents/scripts/find_crontab/output /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/old_cleanup_paths/cleanup_paths_'$(date)' /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
