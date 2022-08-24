@@ -3,12 +3,13 @@ set -x
 
 SEARCH_TARGET=$1
 MTIME_VAL=$2
-OCP=$3
-OUTPUT=$4
-OLD_LOGS_INPUT=$5 
-OLD_LOGS_OUTPUT=$6
-ClEANUP_PATHS_DESINATION=$7
-DOWNLOAD_LOCATION=$8
+#OCP=$3
+#OUTPUT=$4
+#OLD_LOGS_INPUT=$5 
+#OLD_LOGS_OUTPUT=$6
+#ClEANUP_PATHS_DESINATION=$7
+DOWNLOAD_LOCATION=$3
+DIR="$( cd "$( dirname -- "$0" )" && pwd )"
 #checks that first variable is defined when parsing in parameters. $1 is used to the -name switch in find
 if [-z $1]
 then 
@@ -23,47 +24,47 @@ fi
 
 #checks that third variaable is defined when parsing in parameters. $3 is used to designate the folder path that old cleanup paths are moved to 
 
-if [-z $3]
-then
-	OCP=$3
-fi
+#if [-z $3]
+#then
+#	OCP=$3
+#fi
 
 #checks that fourth variaable is defined when parsing in parameters. $4 is used to designate the output which the find command will populate with files to delete
-if [-z $4]
-then
-	OUTPUT=$4
-fi
+#if [-z $4]
+#then
+#	OUTPUT=$4
+#fi
 
 #checks that fifth variaable is defined when parsing in parameters. $5 is used to designate the file for cp to copy out to create a log of folders scanned previous days
-if [-z $5]
-then
-	OLD_LOGS_INPUT=$5
-fi
+#if [-z $5]
+#then
+#	OLD_LOGS_INPUT=$5
+#fi
 
 #checks that sixth variaable is defined when parsing in parameters. $6 is used to designate the destination to copy the previous day's file to for record keeping
-if [-z $6]
-then
-	        OLD_LOGS_OUTPUT=$6
-fi
+#if [-z $6]
+#then
+#	        OLD_LOGS_OUTPUT=$6
+#fi
 
 #checks that seventh variaable is defined when parsing in parameters. $7 is used to designate the file to be downloaded by wget is to be stored on the host machine.
-if [-z $7]
-then
-	ClEANUP_PATHS_DESINATION=$7	
-fi
+#if [-z $7]
+#then
+#	ClEANUP_PATHS_DESINATION=$7	
+#fi
 
 #checks that eighth variaable is defined when parsing in parameters. $8 is used to designate the file to be downloaded by wget. This file contains the absolute paths of folders that are to be cleaned
-if [-z $8]
+if [-z $3]
 then
-	DOWNLOAD_LOCATION=$8
+	DOWNLOAD_LOCATION=$3
 fi
 
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
 
- if [ ! -d $OCP ]; then
+ if [ ! -d $DIR/old_cleanup_paths ]; then
      # make directory if it does not exist
-         mkdir -p $OCP;
+         mkdir -p $DIR/old_cleanup_paths;
  else
          echo "folder already exists"
  fi
@@ -77,9 +78,9 @@ date=$(date +"%d-%m-%Y_%T")
  fi
 
 # #if statement to make the output file
- if [ ! -d $OUTPUT ]; then
+ if [ ! -d $DIR/output ]; then
              # make directory if it does not exist
-               touch $OUTPUT;
+               touch $DIR/output;
          else
              echo "file already exists"
  fi
@@ -93,7 +94,9 @@ date=$(date +"%d-%m-%Y_%T")
  fi
 
 # # copies out previous day's pathways file and renames it with the date at the end.
- cp $OLD_LOGS_INPUT $OLD_LOGS_OUTPUT 
+chmod 777 $DIR/cleanup_paths
+chmod 777 $DIR/old_cleanup_paths/cleanup_paths_'$(date)'
+cp $DIR/cleanup_paths $DIR/old_cleanup_paths/cleanup_paths_'$(date)'
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
@@ -106,7 +109,7 @@ date=$(date +"%d-%m-%Y_%T")
 # # retrieves new pathways file from url
 # # wget -O is used because we only want to download that specific file not the whole html code
 
-wget -O $ClEANUP_PATHS_DESINATION $DOWNLOAD_LOCATION 
+wget -O $DIR/cleanup_paths $DOWNLOAD_LOCATION 
 
 # #checks to see if previous command has ran succesfully
  if [ $? -eq 0 ]; then
@@ -118,7 +121,7 @@ wget -O $ClEANUP_PATHS_DESINATION $DOWNLOAD_LOCATION
  fi
 
 #get cwd
-DIR="$( cd "$( dirname -- "$0" )" && pwd )"
+#DIR="$( cd "$( dirname -- "$0" )" && pwd )"
 
 #runs find against every path defintie in cleanup_paths. Outputs the results to the output file with the current date to create a log of all files deleted.
 file=$DIR/cleanup_paths
