@@ -11,4 +11,4 @@ $5=/home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/
 $6=/home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
 
 # run the following command as it contains all parameters needed in the right spaces. There are 8 parameters in total
-sh ./find_crontab.sh *.logs -2 /home/jack/documents/scripts/old_cleanup_paths /home/jack/documents/scripts/find_crontab/output /home/jack/documents/scripts/find_crontab/cleanup_paths /home/jack/documents/scripts/old_cleanup_paths/cleanup_paths_'$(date)' /home/jack/documents/scripts/cleanup_paths https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
+sh ./find_crontab.sh *.logs -2 https://raw.githubusercontent.com/jack-percival/find-crontab/main/cleanup_paths
