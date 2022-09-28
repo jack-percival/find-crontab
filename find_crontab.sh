@@ -62,13 +62,6 @@ fi
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
 
- if [ ! -d $DIR/cleanup_paths ]; then
-     # make directory if it does not exist
-         mkdir -p $DIR/cleanup_paths;
- else
-         echo "folder already exists"
- fi
-
  if [ ! -d $DIR/old_cleanup_paths ]; then
      # make directory if it does not exist
          mkdir -p $DIR/old_cleanup_paths;
