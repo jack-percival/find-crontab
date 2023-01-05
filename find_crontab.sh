@@ -24,16 +24,15 @@ fi
 
 #checks that third variaable is defined when parsing in parameters. $3 is used to designate the folder path that old cleanup paths are moved to 
 
-#if [-z $3]
-#then
-#	OCP=$3
-#fi
-
+if [-z $3]
+then
+	        DOWNLOAD_LOCATION=$3
+fi
 #checks that fourth variaable is defined when parsing in parameters. $4 is used to designate the output which the find command will populate with files to delete
-#if [-z $4]
-#then
-#	OUTPUT=$4
-#fi
+if [-z $4]
+then
+	PAT=$4
+fi
 
 #checks that fifth variaable is defined when parsing in parameters. $5 is used to designate the file for cp to copy out to create a log of folders scanned previous days
 #if [-z $5]
@@ -54,10 +53,10 @@ fi
 #fi
 
 #checks that eighth variaable is defined when parsing in parameters. $8 is used to designate the file to be downloaded by wget. This file contains the absolute paths of folders that are to be cleaned
-if [-z $3]
-then
-	DOWNLOAD_LOCATION=$3
-fi
+#f [-z $3]
+#hen
+#DOWNLOAD_LOCATION=$3
+#i
 
 # if statement to check if the folder exists and if it doesn't to create it
 date=$(date +"%d-%m-%Y_%T")
@@ -111,7 +110,7 @@ cp $DIR/cleanup_paths $DIR/old_cleanup_paths/cleanup_paths_'$(date)'
 
 #curl -vLJO -H $DIR/cleanup_paths 'Authorization: token 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' $DOWNLOAD_LOCATION
 
-wget -O $DIR/cleanup_paths 'Authorization: token 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' $DIR/cleanup_paths $DOWNLOAD_LOCATION
+wget -O $DIR/cleanup_paths 'Authorization: token $PAT' $DIR/cleanup_paths $DOWNLOAD_LOCATION
 #$DIR/cleanup_paths $DOWNLOAD_LOCATION 
 #wget -O cleanup-paths 'Authorization: token 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' ./cleanup-paths https://raw.githubusercontent.com/RakataTech/paths-to-be-cleaned/main/charlesware-paths?token=GHSAT0AAAAAAB5DGFYQ5YX22ZQ7WLQN2T3IY5W2W2Q
 # #checks to see if previous command has ran succesfully
