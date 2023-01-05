@@ -109,16 +109,19 @@ cp $DIR/cleanup_paths $DIR/old_cleanup_paths/cleanup_paths_'$(date)'
 # # retrieves new pathways file from url
 # # wget -O is used because we only want to download that specific file not the whole html code
 
-wget -O $DIR/cleanup_paths $DOWNLOAD_LOCATION 
+#curl -vLJO -H $DIR/cleanup_paths 'Authorization: token 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' $DOWNLOAD_LOCATION
 
+wget -O $DIR/cleanup_paths 'Authorization: token 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' $DIR/cleanup_paths $DOWNLOAD_LOCATION
+#$DIR/cleanup_paths $DOWNLOAD_LOCATION 
+#wget -O cleanup-paths 'Authorization: token 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' ./cleanup-paths https://raw.githubusercontent.com/RakataTech/paths-to-be-cleaned/main/charlesware-paths?token=GHSAT0AAAAAAB5DGFYQ5YX22ZQ7WLQN2T3IY5W2W2Q
 # #checks to see if previous command has ran succesfully
- if [ $? -eq 0 ]; then
-            echo "file succesfully downloaded"
-     else
-         echo "wget failed"
-         exit
+# if [ $? -eq 0 ]; then
+#            echo "file succesfully downloaded"
+#     else
+#         echo "wget failed"
+#         exit
                 
- fi
+# fi
 
 #get cwd
 #DIR="$( cd "$( dirname -- "$0" )" && pwd )"
