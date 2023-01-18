@@ -4,7 +4,7 @@ set -x
 SEARCH_TARGET=$1
 MTIME_VAL=$2
 DOWNLOAD_LOCATION=$3
-#PAT=$4
+PAT=$4
 DIR="$( cd "$( dirname -- "$0" )" && pwd )"
 #checks that first variable is defined when parsing in parameters. $1 is used to the -name switch in find
 if [-z $1]
@@ -25,10 +25,10 @@ then
 	        DOWNLOAD_LOCATION=$3
 fi
 #checks that fourth variaable is defined when parsing in parameters. $4 is used to designate the output which the find command will populate with files to delete
-#if [-z $4]
-#then
-#	PAT=$4
-#fi
+if [-z $4]
+then
+	PAT=$4
+fi
 
 #checks that fifth variaable is defined when parsing in parameters. $5 is used to designate the file for cp to copy out to create a log of folders scanned previous days
 #if [-z $5]
@@ -107,7 +107,7 @@ cp $DIR/cleanup_paths $DIR/old_cleanup_paths/cleanup_paths_'$(date)'
 #curl -vLJO -H $DIR/cleanup_paths 'Authorization: token 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' $DOWNLOAD_LOCATION
 
 #wget -O $DIR/cleanup_paths 'Authorization: token $PAT' $DIR/cleanup_paths $DOWNLOAD_LOCATION
-wget -O $DIR/cleanup-paths --header 'Authorization: Token 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' $DOWNLOAD_LOCATION
+wget -O $DIR/cleanup-paths --header "Authorization: Token ${PAT}" $DOWNLOAD_LOCATION
 #$DIR/cleanup_paths $DOWNLOAD_LOCATION 
 #wget -O cleanup-paths 'Authorization: token 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' ./cleanup-paths https://raw.githubusercontent.com/RakataTech/paths-to-be-cleaned/main/charlesware-paths?token=GHSAT0AAAAAAB5DGFYQ5YX22ZQ7WLQN2T3IY5W2W2Q
 # #checks to see if previous command has ran succesfully
